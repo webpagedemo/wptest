@@ -1,61 +1,48 @@
-<?php
-/**
- * The main template file
- *
- * This is the most generic template file in a WordPress theme
- * and one of the two required files for a theme (the other being style.css).
- * It is used to display a page when nothing more specific matches a query.
- * e.g., it puts together the home page when no home.php file exists.
- *
- * Learn more: {@link https://codex.wordpress.org/Template_Hierarchy}
- *
- * @package WordPress
- * @subpackage Twenty_Fifteen
- * @since Twenty Fifteen 1.0
- */
+<?php get_header(); ?>
 
-get_header(); ?>
+<!-- Main -->
+        <div id="main">
+                <?php if ( have_posts() ) : ?>
+                    <?php // The loop ?>
+                    <?php while( have_posts() ) : the_post(); ?>
+                        <?php get_template_part( 'content', get_post_format() ); ?>
+                        
+                        <!-- Post -->
+                        <article class="post">
+                                <header>
+                                        <div class="title">
+                                                <h2><a href="#">Magna sed adipiscing</a></h2>
+                                                <p>Lorem ipsum dolor amet nullam consequat etiam feugiat</p>
+                                        </div>
+                                        <div class="meta">
+                                                <time class="published" datetime="2015-11-01">November 1, 2015</time>
+                                                <a href="#" class="author"><span class="name">Jane Doe</span><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/avatar.jpg" alt="" /></a>
+                                        </div>
+                                </header>
+                                <a href="#" class="image featured"><img src="<?php echo get_stylesheet_directory_uri(); ?>/images/pic01.jpg" alt="" /></a>
+                                <p>Mauris neque quam, fermentum ut nisl vitae, convallis maximus nisl. Sed mattis nunc id lorem euismod placerat. Vivamus porttitor magna enim, ac accumsan tortor cursus at. Phasellus sed ultricies mi non congue ullam corper. Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>
+                                <footer>
+                                        <ul class="actions">
+                                                <li><a href="#" class="button big">Continue Reading</a></li>
+                                        </ul>
+                                        <ul class="stats">
+                                                <li><a href="#">General</a></li>
+                                                <li><a href="#" class="icon fa-heart">28</a></li>
+                                                <li><a href="#" class="icon fa-comment">128</a></li>
+                                        </ul>
+                                </footer>
+                        </article>
+                        
+                    <?php endwhile; ?>
+                <?php endif; ?>
+                <!-- Pagination -->
+                        <ul class="actions pagination">
+                                <li><a href="" class="disabled button big previous">Previous Page</a></li>
+                                <li><a href="#" class="button big next">Next Page</a></li>
+                        </ul>
 
-	<div id="primary" class="content-area">
-		<main id="main" class="site-main" role="main">
+        </div>
 
-		<?php if ( have_posts() ) : ?>
 
-			<?php if ( is_home() && ! is_front_page() ) : ?>
-				<header>
-					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
-				</header>
-			<?php endif; ?>
-
-			<?php
-			// Start the loop.
-			while ( have_posts() ) : the_post();
-
-				/*
-				 * Include the Post-Format-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-				 */
-				get_template_part( 'content', get_post_format() );
-
-			// End the loop.
-			endwhile;
-
-			// Previous/next page navigation.
-			the_posts_pagination( array(
-				'prev_text'          => __( 'Previous page', 'twentyfifteen' ),
-				'next_text'          => __( 'Next page', 'twentyfifteen' ),
-				'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'twentyfifteen' ) . ' </span>',
-			) );
-
-		// If no content, include the "No posts found" template.
-		else :
-			get_template_part( 'content', 'none' );
-
-		endif;
-		?>
-
-		</main><!-- .site-main -->
-	</div><!-- .content-area -->
-
+<?php get_sidebar(); ?>
 <?php get_footer(); ?>
